@@ -8,5 +8,11 @@ export const createShip = (length) => {
             }
         }
     }
-    return { length, coordinates, hit };
+    function isSunk() {
+        for (let map of coordinates) {
+            if (!map.get('is hit')) return false;
+        }
+        return true;
+    }
+    return { length, coordinates, hit, isSunk };
 }
