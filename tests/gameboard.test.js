@@ -34,4 +34,16 @@ describe('generate coordinates grid', () => {
         expect(friendlyGameboard.shipsCoordinatesList[0][1].get('y')).toBe(1);
         expect(friendlyGameboard.shipsCoordinatesList[0][1].get('hit')).toBeFalsy();
     });
+
+    test('ship is added to gameboard coordinates grid', () => {
+        friendlyGameboard.generateCoordinatesGrid();
+        enemyGameboard.generateCoordinatesGrid();
+        friendlyGameboard.addShipToCoordinatesGrid(destroyer);
+        expect(friendlyGameboard.coordinatesGrid[0][0].get('has ship')).toBeTruthy();
+        expect(friendlyGameboard.coordinatesGrid[1][0].get('has ship')).toBeTruthy();
+        expect(friendlyGameboard.coordinatesGrid[2][0].get('has ship')).toBeFalsy();
+        expect(friendlyGameboard.coordinatesGrid[0][2].get('has ship')).toBeFalsy();
+        expect(enemyGameboard.coordinatesGrid[0][0].get('has ship')).toBeFalsy();
+        expect(enemyGameboard.coordinatesGrid[1][0].get('has ship')).toBeFalsy();
+    });
 });
