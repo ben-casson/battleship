@@ -10,5 +10,10 @@ export const createGameboard = () => {
         }
     }
 
-    return { coordinatesGrid, generateCoordinatesGrid };
+    const shipsCoordinatesList = [];
+    function addShipCoordinatesToList(shipCoordinatesArray) {
+        this.shipsCoordinatesList.push(shipCoordinatesArray);
+    }
+
+    return { coordinatesGrid, generateCoordinatesGrid, shipsCoordinatesList, addShipCoordinatesToList };
 }
