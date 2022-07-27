@@ -29,9 +29,13 @@ export const createGameboard = () => {
     }
 
     function receiveAttack(xCoordinate, yCoordinate) {
-
+        let currentCoordinate = this.coordinatesGrid.at(yCoordinate).at(xCoordinate);
+        if (currentCoordinate.get('ship') !== 'none') {
+            currentCoordinate.get('ship').hit(xCoordinate, yCoordinate);
+        }
+        currentCoordinate.set('attacked', true);
     }
 
     return { coordinatesGrid, generateCoordinatesGrid, shipsCoordinatesList, addShipCoordinatesToList,
-             addShipToCoordinatesGrid };
+             addShipToCoordinatesGrid, receiveAttack };
 }
