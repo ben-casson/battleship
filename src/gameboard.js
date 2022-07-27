@@ -1,9 +1,9 @@
 export const createGameboard = () => {
     const coordinatesGrid = [];
     function generateCoordinatesGrid() {
-        for (let i = 0; i < 10; i++) {
+        for (let row = 0; row < 10; row++) {
             const rowArray = [];
-            for (let j = 0; j < 10; j++) {
+            for (let column = 0; column < 10; column++) {
                 rowArray.push(new Map().set('ship', 'none').set('attacked', false));
             }
             this.coordinatesGrid.push(rowArray);
@@ -16,14 +16,12 @@ export const createGameboard = () => {
     }
 
     //call upon tile click to place ship, after ship created, gameboard created, etc.
-    //i represents current row in grid, corresponds to y coordinate
-    //j represents current column in grid, corresponds to x coordinate
     function addShipToCoordinatesGrid(shipObject) {
-        for(let i = 0; i < 10; i++) {
-            for (let j = 0; j < 10; j++) {
-                for (let k = 0; k < shipObject.coordinates.length; k++) {
-                    if (shipObject.coordinates[k].get('x') === j && shipObject.coordinates[k].get('y') === i) {
-                        this.coordinatesGrid[i][j].set('ship', shipObject);
+        for(let row = 0; row < 10; row++) {
+            for (let column = 0; column < 10; column++) {
+                for (let i = 0; i < shipObject.coordinates.length; i++) {
+                    if (shipObject.coordinates[i].get('x') === column && shipObject.coordinates[i].get('y') === row) {
+                        this.coordinatesGrid[row][column].set('ship', shipObject);
                     }
                 }
             }
