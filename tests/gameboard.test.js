@@ -18,10 +18,9 @@ describe('generate coordinates grid', () => {
         friendlyGameboard.generateCoordinatesGrid();
         expect(friendlyGameboard.coordinatesGrid.length).toBe(10);
         expect(friendlyGameboard.coordinatesGrid[0].length).toBe(10);
-        expect(friendlyGameboard.coordinatesGrid[0][0]).toEqual('unattacked');
-        expect(friendlyGameboard.coordinatesGrid[0][9]).toEqual('unattacked');
-        expect(friendlyGameboard.coordinatesGrid[9][0]).toEqual('unattacked');
-        expect(friendlyGameboard.coordinatesGrid[9][9]).toEqual('unattacked');
+        expect(friendlyGameboard.coordinatesGrid[0][0].size).toBe(2);
+        expect(friendlyGameboard.coordinatesGrid[0][0].has('has ship')).toBeTruthy();
+        expect(friendlyGameboard.coordinatesGrid[0][0].has('attacked')).toBeTruthy();
     });
 
     test('are friendly ships added to list', () => {
