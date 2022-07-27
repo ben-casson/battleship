@@ -1,6 +1,6 @@
 import { createShip } from "../src/ship";
 
-describe('ship coordinates, is hit, and is sunk', () => {
+describe('ship public methods', () => {
     const destroyer = createShip(2);
     const cruiser = createShip(3);
     beforeEach(() => {
