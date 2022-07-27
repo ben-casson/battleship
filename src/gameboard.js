@@ -11,7 +11,7 @@ export const createGameboard = () => {
     }
 
     const shipsCoordinatesList = [];
-    function addShipCoordinatesToList(shipCoordinatesArray) {
+    function addShipCoordinatesToCoordinatesList(shipCoordinatesArray) {
         this.shipsCoordinatesList.push(shipCoordinatesArray);
     }
 
@@ -28,6 +28,11 @@ export const createGameboard = () => {
         }
     }
 
+    const shipsList = [];
+    function addShipToShipsList(shipObject) {
+        this.shipsList.push(shipObject);
+    }
+
     function receiveAttack(xCoordinate, yCoordinate) {
         let currentCoordinate = this.coordinatesGrid.at(yCoordinate).at(xCoordinate);
         if (currentCoordinate.get('ship') !== 'none') {
@@ -36,6 +41,10 @@ export const createGameboard = () => {
         currentCoordinate.set('attacked', true);
     }
 
-    return { coordinatesGrid, generateCoordinatesGrid, shipsCoordinatesList, addShipCoordinatesToList,
+    function allShipsAreSunk() {
+
+    }
+
+    return { coordinatesGrid, generateCoordinatesGrid, shipsCoordinatesList, addShipCoordinatesToCoordinatesList,
              addShipToCoordinatesGrid, receiveAttack };
 }
