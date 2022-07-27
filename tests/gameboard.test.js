@@ -61,4 +61,12 @@ describe('public gameboard methods', () => {
         expect(destroyer.coordinates[1].get('hit')).toBeTruthy();
         expect(destroyer.isSunk()).toBeTruthy();
     });
+
+    test('gameboard marks coordinate as attacked', () => {
+        friendlyGameboard.addShipToCoordinatesGrid(destroyer);
+        friendlyGameboard.receiveAttack(0, 0);
+        expect(friendlyGameboard.coordinatesGrid[0][0].get('attacked')).toBeTruthy();
+        expect(friendlyGameboard.coordinatesGrid[1][0].get('attacked')).toBeFalsy();
+        expect(friendlyGameboard.coordinatesGrid[5][8].get('attacked')).toBeFalsy();
+    });
 });
