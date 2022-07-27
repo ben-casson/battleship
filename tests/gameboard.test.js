@@ -45,4 +45,17 @@ describe('public gameboard methods', () => {
         expect(enemyGameboard.coordinatesGrid[0][0].get('ship')).toEqual('none');
         expect(enemyGameboard.coordinatesGrid[1][0].get('ship')).toEqual('none');
     });
+
+    test('ship receives attack', () => {
+        friendlyGameboard.generateCoordinatesGrid();
+        friendlyGameboard.addShipToCoordinatesGrid(destroyer);
+        friendlyGameboard.receiveAttack(0, 0);
+        expect(destroyer.coordinates[0].get('hit')).toBeTruthy();
+        expect(destroyer.coordinates[1].get('hit')).toBeFalsy();
+        expect(destroyer.isSunk()).toBeFalsy();
+        friendlyGameboard.receiveAttack(0, 1);
+        expect(destroyer.coordinates[0].get('hit')).toBeTruthy();
+        expect(destroyer.coordinates[1].get('hit')).toBeTruthy();
+        expect(destroyer.isSunk()).toBeTruthy();
+    });
 });
