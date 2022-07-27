@@ -19,7 +19,7 @@ describe('generate coordinates grid', () => {
         expect(friendlyGameboard.coordinatesGrid.length).toBe(10);
         expect(friendlyGameboard.coordinatesGrid[0].length).toBe(10);
         expect(friendlyGameboard.coordinatesGrid[0][0].size).toBe(2);
-        expect(friendlyGameboard.coordinatesGrid[0][0].has('has ship')).toBeTruthy();
+        expect(friendlyGameboard.coordinatesGrid[0][0].has('ship')).toBeTruthy();
         expect(friendlyGameboard.coordinatesGrid[0][0].has('attacked')).toBeTruthy();
     });
 
@@ -39,11 +39,10 @@ describe('generate coordinates grid', () => {
         friendlyGameboard.generateCoordinatesGrid();
         enemyGameboard.generateCoordinatesGrid();
         friendlyGameboard.addShipToCoordinatesGrid(destroyer);
-        expect(friendlyGameboard.coordinatesGrid[0][0].get('has ship')).toBeTruthy();
-        expect(friendlyGameboard.coordinatesGrid[1][0].get('has ship')).toBeTruthy();
-        expect(friendlyGameboard.coordinatesGrid[2][0].get('has ship')).toBeFalsy();
-        expect(friendlyGameboard.coordinatesGrid[0][2].get('has ship')).toBeFalsy();
-        expect(enemyGameboard.coordinatesGrid[0][0].get('has ship')).toBeFalsy();
-        expect(enemyGameboard.coordinatesGrid[1][0].get('has ship')).toBeFalsy();
+        expect(friendlyGameboard.coordinatesGrid[0][0].get('ship')).toBe(destroyer);
+        expect(friendlyGameboard.coordinatesGrid[1][0].get('ship')).toBe(destroyer);
+        expect(friendlyGameboard.coordinatesGrid[2][0].get('ship')).toEqual('none');
+        expect(enemyGameboard.coordinatesGrid[0][0].get('ship')).toEqual('none');
+        expect(enemyGameboard.coordinatesGrid[1][0].get('ship')).toEqual('none');
     });
 });
