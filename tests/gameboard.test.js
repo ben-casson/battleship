@@ -1,7 +1,7 @@
 import { createGameboard } from "../src/gameboard";
 import { createShip } from "../src/ship";
 
-describe('generate coordinates grid', () => {
+describe('public gameboard methods', () => {
     const friendlyGameboard = createGameboard();
     const enemyGameboard = createGameboard();
     const destroyer = createShip(2);
