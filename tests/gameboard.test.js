@@ -30,9 +30,9 @@ describe('public gameboard methods', () => {
     });
 
     test('friendly ships are added to list', () => {
-        friendlyGameboard.addShipCoordinatesToList(destroyer.coordinates);
+        friendlyGameboard.addShipToGameboard(destroyer);
         expect(friendlyGameboard.shipsCoordinatesList.length).toBe(1);
-        friendlyGameboard.addShipCoordinatesToList(cruiser.coordinates);
+        friendlyGameboard.addShipToGameboard(cruiser);
         expect(friendlyGameboard.shipsCoordinatesList.length).toBe(2);
         expect(friendlyGameboard.shipsCoordinatesList[0].length).toBe(2);
         expect(friendlyGameboard.shipsCoordinatesList[1].length).toBe(3);
@@ -42,7 +42,7 @@ describe('public gameboard methods', () => {
     });
 
     test('ship is added to gameboard coordinates grid', () => {
-        friendlyGameboard.addShipToCoordinatesGrid(destroyer);
+        friendlyGameboard.addShipToGameboard(destroyer);
         expect(friendlyGameboard.coordinatesGrid[0][0].get('ship')).toBe(destroyer);
         expect(friendlyGameboard.coordinatesGrid[1][0].get('ship')).toBe(destroyer);
         expect(friendlyGameboard.coordinatesGrid[2][0].get('ship')).toEqual('none');
@@ -51,7 +51,7 @@ describe('public gameboard methods', () => {
     });
 
     test('ship receives attack', () => {
-        friendlyGameboard.addShipToCoordinatesGrid(destroyer);
+        friendlyGameboard.addShipToGameboard(destroyer);
         friendlyGameboard.receiveAttack(0, 0);
         expect(destroyer.coordinates[0].get('hit')).toBeTruthy();
         expect(destroyer.coordinates[1].get('hit')).toBeFalsy();
@@ -63,10 +63,11 @@ describe('public gameboard methods', () => {
     });
 
     test('gameboard marks coordinate as attacked', () => {
-        friendlyGameboard.addShipToCoordinatesGrid(destroyer);
+        friendlyGameboard.addShipToGameboard(destroyer);
         friendlyGameboard.receiveAttack(0, 0);
         expect(friendlyGameboard.coordinatesGrid[0][0].get('attacked')).toBeTruthy();
         expect(friendlyGameboard.coordinatesGrid[1][0].get('attacked')).toBeFalsy();
         expect(friendlyGameboard.coordinatesGrid[5][8].get('attacked')).toBeFalsy();
+        expect(enemyGameboard.coordinatesGrid[0][0].get('attacked')).toBeFalsy();
     });
 });
