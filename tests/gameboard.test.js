@@ -2,11 +2,18 @@ import { createGameboard } from "../src/gameboard";
 import { createShip } from "../src/ship";
 
 describe('public gameboard methods', () => {
-    const friendlyGameboard = createGameboard();
-    const enemyGameboard = createGameboard();
-    const destroyer = createShip(2);
-    const cruiser = createShip(3);
+    let friendlyGameboard;
+    let enemyGameboard;
+    let destroyer;
+    let cruiser;
+
     beforeEach(() => {
+        friendlyGameboard = createGameboard();
+        friendlyGameboard.generateCoordinatesGrid();
+        enemyGameboard = createGameboard();
+        enemyGameboard.generateCoordinatesGrid();
+        destroyer = createShip(2);
+        cruiser = createShip(3);
         destroyer.coordinates = [new Map().set('x', 0).set('y', 0).set('hit', false),
                                   new Map().set('x', 0).set('y', 1).set('hit', false)];
         cruiser.coordinates = [new Map().set('x', 9).set('y', 0).set('hit', false),
@@ -15,7 +22,6 @@ describe('public gameboard methods', () => {
     });
 
     test('grid is created properly', () => {
-        friendlyGameboard.generateCoordinatesGrid();
         expect(friendlyGameboard.coordinatesGrid.length).toBe(10);
         expect(friendlyGameboard.coordinatesGrid[0].length).toBe(10);
         expect(friendlyGameboard.coordinatesGrid[0][0].size).toBe(2);
@@ -36,8 +42,6 @@ describe('public gameboard methods', () => {
     });
 
     test('ship is added to gameboard coordinates grid', () => {
-        friendlyGameboard.generateCoordinatesGrid();
-        enemyGameboard.generateCoordinatesGrid();
         friendlyGameboard.addShipToCoordinatesGrid(destroyer);
         expect(friendlyGameboard.coordinatesGrid[0][0].get('ship')).toBe(destroyer);
         expect(friendlyGameboard.coordinatesGrid[1][0].get('ship')).toBe(destroyer);
@@ -47,7 +51,6 @@ describe('public gameboard methods', () => {
     });
 
     test('ship receives attack', () => {
-        friendlyGameboard.generateCoordinatesGrid();
         friendlyGameboard.addShipToCoordinatesGrid(destroyer);
         friendlyGameboard.receiveAttack(0, 0);
         expect(destroyer.coordinates[0].get('hit')).toBeTruthy();
