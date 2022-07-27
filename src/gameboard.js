@@ -15,5 +15,21 @@ export const createGameboard = () => {
         this.shipsCoordinatesList.push(shipCoordinatesArray);
     }
 
-    return { coordinatesGrid, generateCoordinatesGrid, shipsCoordinatesList, addShipCoordinatesToList };
+    //call upon tile click to place ship, after ship created, gameboard created, etc.
+    //i represents current row in grid, corresponds to y coordinate
+    //j represents current column in grid, corresponds to x coordinate
+    function addShipToCoordinatesGrid(shipObject) {
+        for(let i = 0; i < 10; i++) {
+            for (let j = 0; j < 10; j++) {
+                for (let k = 0; k < shipObject.coordinates.length; k++) {
+                    if (shipObject.coordinates[k].get('x') === j && shipObject.coordinates[k].get('y') === i) {
+                        this.coordinatesGrid[i][j].set('has ship', true);
+                    }
+                }
+            }
+        }
+    }
+
+    return { coordinatesGrid, generateCoordinatesGrid, shipsCoordinatesList, addShipCoordinatesToList,
+             addShipToCoordinatesGrid };
 }
