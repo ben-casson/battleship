@@ -59,12 +59,12 @@ h1 {
     font-family: 'Bebas Neue', cursive;
     font-size: 2rem;
 }
-@media only screen and (min-width: 500px) and (min-height: 500px){
+@media only screen and (min-width: 500px) and (min-height: 500px) {
     h1 {
         font-size: 3rem;
     }
 }
-@media only screen and (min-width: 1200px) and (min-height: 650px){
+@media only screen and (min-width: 1200px) and (min-height: 650px) {
     h1 {
         font-size: 5rem;
     }
@@ -101,6 +101,11 @@ h1 {
         max-width: 500px;
         height: 35vw;
         max-height: 500px;
+    }
+}
+@media only screen and (min-width: 1200px) and (min-height: 850px) {
+    #gameboards-container {
+        padding-bottom: 40px;
     }
 }
 @media only screen and (max-height: 400px) {
