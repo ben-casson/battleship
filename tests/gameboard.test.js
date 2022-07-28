@@ -1,5 +1,5 @@
-import { createGameboard } from "../src/gameboard";
-import { createShip } from "../src/ship";
+import { createGameboard } from "../src/models/gameboard";
+import { createShip } from "../src/models/ship";
 
 describe('public gameboard methods', () => {
     let friendlyGameboard;

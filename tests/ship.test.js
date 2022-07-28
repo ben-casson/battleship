@@ -1,4 +1,4 @@
-import { createShip } from "../src/ship";
+import { createShip } from "../src/models/ship";
 
 describe('ship public methods', () => {
     const destroyer = createShip(2);
