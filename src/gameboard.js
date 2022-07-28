@@ -53,10 +53,13 @@ export const createGameboard = () => {
         currentCoordinate.set('attacked', true);
     }
 
-    // function allShipsAreSunk() {
-
-    // }
+    function allShipsAreSunk() {
+        for (let ship of this.shipsList) {
+            if (!ship.isSunk()) return false;
+        }
+        return true;
+    }
 
     return { coordinatesGrid, generateCoordinatesGrid, shipsCoordinatesList, addShipToGameboard,
-             shipsList, receiveAttack };
+             shipsList, receiveAttack, allShipsAreSunk };
 }
