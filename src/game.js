@@ -13,9 +13,13 @@ const enemyCruiser1 = createShip(3);
 const enemyCruiser2 = createShip(3);
 const enemyDestroyer = createShip(5);
 
+const friendlyGameboard = createGameboard();
+friendlyGameboard.generateCoordinatesGrid();
+
+const enemyGameboard = createGameboard();
+enemyGameboard.generateCoordinatesGrid();
+
 export function playGame() {
-    const friendlyGameboard = createGameboard();
-    friendlyGameboard.generateCoordinatesGrid();
     
     //dynamically generate grid ui (import from /views)
 }
