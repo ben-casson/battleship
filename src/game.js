@@ -1,7 +1,9 @@
-import { createGameboard } from "./gameboard";
-import { createShip } from "./ship";
+import { createGameboard } from "./models/gameboard";
+import { createShip } from "./models/ship";
 
 export function playGame() {
+    const friendlyGameboard = createGameboard();
+    friendlyGameboard.generateCoordinatesGrid();
     
-    while()
+    //dynamically generate grid ui (import from /views)
 }
