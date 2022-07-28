@@ -58,10 +58,21 @@ $dark-red: #710000;
 h1 {
     font-family: 'Bebas Neue', cursive;
     font-size: 2rem;
+    letter-spacing: 1px;
+}
+
+h2 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
 }
 @media only screen and (min-width: 500px) and (min-height: 500px) {
     h1 {
         font-size: 3rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
     }
 }
 @media only screen and (min-width: 1200px) and (min-height: 650px) {
@@ -78,6 +89,12 @@ h1 {
 }
 
 .gameboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gameboard {
     flex-grow: 1;
     width: 90vw;
     max-width: 400px;
@@ -96,7 +113,7 @@ h1 {
         gap: 5vw;
     }
 
-    .gameboard-container {
+    .gameboard {
         width: 35vw;
         max-width: 500px;
         height: 35vw;
@@ -109,7 +126,7 @@ h1 {
     }
 }
 @media only screen and (max-height: 400px) {
-    .gameboard-container {
+    .gameboard {
         max-width: 300px;
         max-height: 300px;
     }
