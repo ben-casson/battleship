@@ -3,7 +3,8 @@ import { createShip } from "./models/ship.js";
 import { changeShipOrientation,
          displayGameboardTiles,
          showPotentialShipOnMouseover,
-        friendlyGameboardDisplay } from "./views.js";
+         friendlyGameboardDisplay,
+         addShipToGameboardDisplay} from "./views.js";
 
 export function playGame() {
     const friendlyCarrier = createShip(5);
@@ -37,5 +38,6 @@ export function playGame() {
         tilesList.forEach(tile => tile.classList.remove('ship-preview'));
     });
     showPotentialShipOnMouseover(friendlyCarrier, tilesList);
+    addShipToGameboardDisplay(friendlyCarrier, tilesList);
 }
 
