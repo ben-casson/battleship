@@ -31,33 +31,37 @@ export function displayGameboardTiles(gameboardDisplay, gameboardDisplayString) 
     }
 }
 
-function displayPotentialShip(tile, iterator) {
+
+//used for b
+function setShipCoordinates(shipObject) {
+
+}
+
+function displayPotentialShip(tile, iterator, tilesList) {
     let xCoordinate = parseInt(tile.dataset.xCoordinate);
     let yCoordinate = parseInt(tile.dataset.yCoordinate);
-    if (verticalButton.classList.contains('selected')) {
+    if (verticalButton.classList.contains('selected') && yCoordinate + iterator < 10) {
         document.querySelector(`[data-x-coordinate="${xCoordinate}"][data-y-coordinate="${yCoordinate + iterator}"]`).classList.add('ship-preview');
     }
-    else {
+    else if (horizontalButton.classList.contains('selected') && xCoordinate + iterator < 10) {
         document.querySelector(`[data-x-coordinate="${xCoordinate + iterator}"][data-y-coordinate="${yCoordinate}"]`).classList.add('ship-preview');
+    }
+    else {
+        for (let gameTile of tilesList) gameTile.classList.remove('ship-preview'); 
     }
 }
 
-export function highlightPotentialShipPlacement(shipObject, tilesList) {
+function highlightPotentialShipPlacement(event, shipObject, tilesList) {
+    for (let gameTile of tilesList) gameTile.classList.remove('ship-preview');
+    for (let i = 0; i < shipObject.length; i++) {
+        displayPotentialShip(event.target, i, tilesList);
+    }  
+}
+
+export function showPotentialShipOnMouseover(shipObject, tilesList) {
     tilesList.forEach(tile => {
         tile.addEventListener('mouseover', (event) => {
-            for (let gameTile of tilesList) gameTile.classList.remove('ship-preview');
-            for (let i = 0; i < shipObject.length; i++) {
-                displayPotentialShip(event.target, i);
-            }
-            // let highlightedTileCount = 0;
-            // for (let gameTile of tilesList) {
-            //     if (gameTile.classList.contains('ship-preview')) {
-            //         highlightedTileCount++;
-            //     }           
-            //     if (highlightedTileCount < shipObject.length) {
-            //         for (let gameTile of tilesList) gameTile.classList.remove('ship-preview'); 
-            //     }
-            // }            
+            highlightPotentialShipPlacement(event, shipObject, tilesList);            
         });
     });
 }
