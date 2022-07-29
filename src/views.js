@@ -17,3 +17,17 @@ export function changeShipOrientation() {
         changeSelectedButton(horizontalButton, verticalButton);
     });
 }
+
+export function displayGameboardTiles(gameboardDisplay, gameboardDisplayString) {
+    for (let row = 0; row < 10; row++) {
+        for (let column = 0; column < 10; column++) {
+            const tile = document.createElement('div');
+            tile.classList.add('tile');
+            tile.classList.add(`${gameboardDisplayString}-tile`);
+            tile.dataset.xCoordinate = `${column}`;
+            tile.dataset.yCoordinate = `${row}`;
+            gameboardDisplay.appendChild(tile);
+        }
+    }
+}
+
