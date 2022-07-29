@@ -1,6 +1,9 @@
 import { createGameboard } from "./models/gameboard.js";
 import { createShip } from "./models/ship.js";
 import { changeShipOrientation } from "./views.js";
+import { displayGameboardTiles } from "./views.js";
+
+const friendlyGameboardDisplay = document.getElementById('friendly-gameboard');
 
 export function playGame() {
     const friendlyCarrier = createShip(5);
@@ -22,6 +25,8 @@ export function playGame() {
     enemyGameboard.generateCoordinatesGrid();
 
     changeShipOrientation();
+
+    displayGameboardTiles(friendlyGameboardDisplay, 'friendlyGameboardDisplay');
     //dynamically generate grid ui (import from /views)
 }
 
