@@ -106,12 +106,6 @@ button {
     background-color: transparent;
     color: $light-gray;
     letter-spacing: 1px;
-    border: solid 1px transparent; /* Safari workaround */
-    margin: -1px;
-}
-
-button:hover {
-    color: #fff;
 }
 
 .selected {
@@ -119,10 +113,6 @@ button:hover {
     color: #000;
     font-size: 1.1rem;
     border-radius: 19px;
-}
-
-.selected:hover {
-    color: #000;
 }
 
 #gameboards-container {
