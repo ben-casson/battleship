@@ -2,9 +2,8 @@ import { createGameboard } from "./models/gameboard.js";
 import { createShip } from "./models/ship.js";
 import { changeShipOrientation,
          displayGameboardTiles,
-         showPotentialShipOnMouseover } from "./views.js";
-
-const friendlyGameboardDisplay = document.getElementById('friendly-gameboard');
+         showPotentialShipOnMouseover,
+        friendlyGameboardDisplay } from "./views.js";
 
 export function playGame() {
     const friendlyCarrier = createShip(5);
