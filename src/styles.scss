@@ -92,8 +92,9 @@ h2 {
     grid-template-columns: 1fr 1fr;
     width: 220px;
     height: 40px;
-    border-radius: 4px;
-    outline: 1px solid #fff;
+    border-radius: 20px;
+    background-color: #161616; //272727
+    outline: 1px solid $light-gray;
 }
 
 button {
@@ -107,20 +108,19 @@ button {
     letter-spacing: 1px;
 }
 
+button:hover {
+    color: #fff;
+}
+
 .selected {
-    background-color: #fff;
+    background-color: $light-gray;
     color: #000;
     font-size: 1.1rem;
+    border-radius: 19px;
 }
 
-#vertical-btn.selected {
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-}
-
-#horizontal-btn.selected {
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
+.selected:hover {
+    color: #000;
 }
 
 #gameboards-container {
