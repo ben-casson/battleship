@@ -141,12 +141,15 @@ button:hover {
 }
 
 .gameboard {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 3px;
     flex-grow: 1;
     width: 90vw;
     max-width: 400px;
     height: 90vw;
     max-height: 400px;
-    outline: 1px solid red;
 }
 
 @media only screen and (min-width: 780px) {
@@ -176,4 +179,8 @@ button:hover {
         max-width: 300px;
         max-height: 300px;
     }
+}
+
+.tile {
+    background-color: $blue;
 }
