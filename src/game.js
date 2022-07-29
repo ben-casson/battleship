@@ -31,8 +31,6 @@ export function playGame() {
 
     displayGameboardTiles(friendlyGameboardDisplay, 'friendly-gameboard-display');
 
-    // friendlyCarrier.canBePlacedOnGameboard = true;
-
     const tilesList = [...document.querySelectorAll('.friendly-gameboard-display-tile')];
     friendlyGameboardDisplay.addEventListener('mouseleave', () => {
         tilesList.forEach(tile => tile.classList.remove('ship-preview'));
