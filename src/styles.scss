@@ -106,6 +106,8 @@ button {
     background-color: transparent;
     color: $light-gray;
     letter-spacing: 1px;
+    border: solid 1px transparent; /* Safari workaround */
+    margin: -1px;
 }
 
 button:hover {
