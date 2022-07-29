@@ -10,13 +10,13 @@ export function playGame() {
     const friendlyBattleship = createShip(4);
     const friendlyCruiser1 = createShip(3);
     const friendlyCruiser2 = createShip(3);
-    const friendlyDestroyer = createShip(5);
+    const friendlyDestroyer = createShip(2);
     
     const enemyCarrier = createShip(5);
     const enemyBattleship = createShip(4);
     const enemyCruiser1 = createShip(3);
     const enemyCruiser2 = createShip(3);
-    const enemyDestroyer = createShip(5);
+    const enemyDestroyer = createShip(2);
     
     const friendlyGameboard = createGameboard();
     friendlyGameboard.generateCoordinatesGrid();
