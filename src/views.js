@@ -31,3 +31,34 @@ export function displayGameboardTiles(gameboardDisplay, gameboardDisplayString) 
     }
 }
 
+function displayPotentialShip(tile, iterator) {
+    let xCoordinate = parseInt(tile.dataset.xCoordinate);
+    let yCoordinate = parseInt(tile.dataset.yCoordinate);
+    if (verticalButton.classList.contains('selected')) {
+        document.querySelector(`[data-x-coordinate="${xCoordinate}"][data-y-coordinate="${yCoordinate + iterator}"]`).classList.add('ship-preview');
+    }
+    else {
+        document.querySelector(`[data-x-coordinate="${xCoordinate + iterator}"][data-y-coordinate="${yCoordinate}"]`).classList.add('ship-preview');
+    }
+}
+
+export function highlightPotentialShipPlacement(shipObject, tilesList) {
+    tilesList.forEach(tile => {
+        tile.addEventListener('mouseover', (event) => {
+            for (let gameTile of tilesList) gameTile.classList.remove('ship-preview');
+            for (let i = 0; i < shipObject.length; i++) {
+                displayPotentialShip(event.target, i);
+            }
+            // let highlightedTileCount = 0;
+            // for (let gameTile of tilesList) {
+            //     if (gameTile.classList.contains('ship-preview')) {
+            //         highlightedTileCount++;
+            //     }           
+            //     if (highlightedTileCount < shipObject.length) {
+            //         for (let gameTile of tilesList) gameTile.classList.remove('ship-preview'); 
+            //     }
+            // }            
+        });
+    });
+}
+
