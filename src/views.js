@@ -1,3 +1,6 @@
+import { friendlyGameboard,
+         friendlyShipsList } from "./game.js";
+
 const verticalButton = document.getElementById('vertical-btn');
 const horizontalButton = document.getElementById('horizontal-btn');
 
@@ -33,12 +36,6 @@ export function displayGameboardTiles(gameboardDisplay, gameboardDisplayString) 
     }
 }
 
-
-//used for b
-function setShipCoordinates(shipObject) {
-
-}
-
 function displayPotentialShip(tile, iterator, tilesList) {
     let xCoordinate = parseInt(tile.dataset.xCoordinate);
     let yCoordinate = parseInt(tile.dataset.yCoordinate);
@@ -61,39 +58,65 @@ function displayPotentialShip(tile, iterator, tilesList) {
     }
 }
 
-function highlightPotentialShipPlacement(event, shipObject, tilesList) {
+function highlightPotentialShipPlacement(event, tilesList, friendlyShipsList, friendlyGameboard) {
     for (let gameTile of tilesList) gameTile.classList.remove('ship-preview');
-    for (let i = 0; i < shipObject.length; i++) {
-        displayPotentialShip(event.target, i, tilesList);
-    }  
+    let currentShip;
+    if (friendlyGameboard.shipsList.length < 5) {
+        currentShip = friendlyShipsList[friendlyGameboard.shipsList.length];
+        for (let i = 0; i < currentShip.length; i++) {
+            displayPotentialShip(event.target, i, tilesList);
+        }  
+    }
+    else {
+        for (let gameTile of tilesList) {
+            gameTile.style.cursor = 'default';
+            friendlyGameboardDisplay.style.cursor = 'default';
+        }
+    }
 }
 
-export function showPotentialShipOnMouseover(shipObject, tilesList) {
+export function showPotentialShipOnMouseover(tilesList) {
     tilesList.forEach(tile => {
         tile.addEventListener('mouseover', (event) => {
-            highlightPotentialShipPlacement(event, shipObject, tilesList);            
+            highlightPotentialShipPlacement(event, tilesList, friendlyShipsList, friendlyGameboard);            
         });
     });
 }
 
+function setShipCoordinates(tilesList) {
+    let currentShip;
+    if (friendlyGameboard.shipsList.length < 5) {
+        currentShip = friendlyShipsList[friendlyGameboard.shipsList.length];
+        for (let gameTile of tilesList) {
+            if (gameTile.classList.contains('ship-preview')) {
+                currentShip.coordinates.push(new Map().set('x', gameTile.dataset.xCoordinate)
+                                                    .set('y', gameTile.dataset.yCoordinate)
+                                                    .set('hit', false));
+                gameTile.classList.remove('ship-preview');
+                gameTile.classList.add('has-ship');
+            }
+        }
+        // console.log(currentShip.coordinates);
+        friendlyGameboard.addShipToGameboard(currentShip);
+        console.log(friendlyGameboard.shipsList);
+    }
+}
 
-
-export function addShipToGameboardDisplay(shipObject, tilesList) {
+export function addShipToGameboardDisplay(tilesList) {
     tilesList.forEach(tile => {
         tile.addEventListener('click', () => {
             tile.removeEventListener('mouseover', (event) => {
-                highlightPotentialShipPlacement(event, shipObject, tilesList);            
+                highlightPotentialShipPlacement(event, tilesList, friendlyShipsList, friendlyGameboard);            
             });
-            for (let gameTile of tilesList) {
-                shipObject.coordinates.push(new Map().set('x', gameTile.dataset.xCoordinate)
-                                                     .set('y', gameTile.dataset.yCoordinate)
-                                                     .set('hit', false));
-                if (gameTile.classList.contains('ship-preview')) {
-                    gameTile.classList.remove('ship-preview');
-                    gameTile.classList.add('has-ship');
-                }
-            }
         }, { once: true });
         
     });
+    if (friendlyGameboard.shipsList.length < 5) {
+        tilesList.forEach(tile => {
+            tile.addEventListener('click', () => {
+                if (tile.style.cursor !== 'not-allowed') setShipCoordinates(tilesList);
+            }, { once: true });
+            
+        });
+    }
 }
