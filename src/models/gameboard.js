@@ -46,8 +46,8 @@ export const createGameboard = () => {
         for(let row = 0; row < 10; row++) {
             for (let column = 0; column < 10; column++) {
                 for (let i = 0; i < shipObject.coordinates.length; i++) {
-                    if (shipObject.coordinates[i].get('x') === column 
-                        && shipObject.coordinates[i].get('y') === row) {
+                    if (parseInt(shipObject.coordinates[i].get('x')) === column 
+                        && parseInt(shipObject.coordinates[i].get('y')) === row) {
                         coordinatesGrid[row][column].set('ship', shipObject);
                     }
                 }
