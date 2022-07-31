@@ -45,19 +45,18 @@ function displayPotentialShip(tile, iterator, tilesList, currentShip) {
         gameTile.style.cursor = 'pointer';
         friendlyGameboardDisplay.style.cursor = 'pointer';
     }
-    let canShowPortentialShip = true;
+    let canShowPotentialShip = true;
     if (verticalButton.classList.contains('selected') && yCoordinate + iterator < 10) {
         for (let k = 0; k < currentShip.length; k++) {
             if (yCoordinate + k < 10 && document.querySelector(`[data-x-coordinate="${xCoordinate}"][data-y-coordinate="${yCoordinate + k}"]`).classList.contains('has-ship')) {
-                canShowPortentialShip = false;
+                canShowPotentialShip = false;
             }
         }
-        if (canShowPortentialShip) {
+        if (canShowPotentialShip) {
             document.querySelector(`[data-x-coordinate="${xCoordinate}"][data-y-coordinate="${yCoordinate + iterator}"]`).classList.add('ship-preview');
         }
         else {
             for (let gameTile of tilesList) {
-                gameTile.classList.remove('ship-preview');
                 gameTile.style.cursor = 'not-allowed';
                 friendlyGameboardDisplay.style.cursor = 'not-allowed';
             }
@@ -66,15 +65,14 @@ function displayPotentialShip(tile, iterator, tilesList, currentShip) {
     else if (horizontalButton.classList.contains('selected') && xCoordinate + iterator < 10) {
         for (let k = 0; k < currentShip.length; k++) {
             if (xCoordinate + k < 10 && document.querySelector(`[data-x-coordinate="${xCoordinate + k}"][data-y-coordinate="${yCoordinate}"]`).classList.contains('has-ship')) {
-                canShowPortentialShip = false;
+                canShowPotentialShip = false;
             }
         }
-        if (canShowPortentialShip) {
+        if (canShowPotentialShip) {
             document.querySelector(`[data-x-coordinate="${xCoordinate + iterator}"][data-y-coordinate="${yCoordinate}"]`).classList.add('ship-preview');
         }
         else {
             for (let gameTile of tilesList) {
-                gameTile.classList.remove('ship-preview');
                 gameTile.style.cursor = 'not-allowed';
                 friendlyGameboardDisplay.style.cursor = 'not-allowed';
             }
