@@ -8,10 +8,10 @@ const gameplayText = document.getElementById('gameplay-text');
 
 export const friendlyGameboardDisplay = document.getElementById('friendly-gameboard');
 
-function changeSelectedButton(selectedButton, unselectedButton) {
-    if (!selectedButton.classList.contains('selected')) {
-        unselectedButton.classList.remove('selected');
-        selectedButton.classList.add('selected');
+function changeSelectedButton(verticalButton, horizontalButton) {
+    if (!verticalButton.classList.contains('selected')) {
+        horizontalButton.classList.remove('selected');
+        verticalButton.classList.add('selected');
     }
 }
 
@@ -100,8 +100,8 @@ function setShipCoordinates(tilesList) {
         for (let gameTile of tilesList) {
             if (gameTile.classList.contains('ship-preview')) {
                 currentShip.coordinates.push(new Map().set('x', gameTile.dataset.xCoordinate)
-                                                    .set('y', gameTile.dataset.yCoordinate)
-                                                    .set('hit', false));
+                                                      .set('y', gameTile.dataset.yCoordinate)
+                                                      .set('hit', false));
                 gameTile.classList.remove('ship-preview');
                 gameTile.classList.add('has-ship');
             }
