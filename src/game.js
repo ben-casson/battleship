@@ -6,19 +6,19 @@ import { changeShipOrientation,
          friendlyGameboardDisplay,
          addShipToGameboardDisplay} from "./views.js";
 
-const friendlyCarrier = createShip(5);
-const friendlyBattleship = createShip(4);
-const friendlyCruiser1 = createShip(3);
-const friendlyCruiser2 = createShip(3);
-const friendlyDestroyer = createShip(2);
+const friendlyCarrier = createShip(5, 'Carrier');
+const friendlyBattleship = createShip(4, 'Battleship');
+const friendlyCruiser1 = createShip(3, 'first Cruiser');
+const friendlyCruiser2 = createShip(3, 'second Cruiser');
+const friendlyDestroyer = createShip(2, 'Destroyer');
 export const friendlyShipsList = [friendlyCarrier, friendlyBattleship, friendlyCruiser1, 
                                     friendlyCruiser2, friendlyDestroyer]
 
-const enemyCarrier = createShip(5);
-const enemyBattleship = createShip(4);
-const enemyCruiser1 = createShip(3);
-const enemyCruiser2 = createShip(3);
-const enemyDestroyer = createShip(2);
+const enemyCarrier = createShip(5, 'Carrier');
+const enemyBattleship = createShip(4, 'Battleship');
+const enemyCruiser1 = createShip(3, 'first Cruiser');
+const enemyCruiser2 = createShip(3, 'second Cruiser');
+const enemyDestroyer = createShip(2, 'Destroyer');
 
 export const friendlyGameboard = createGameboard();
 friendlyGameboard.generateCoordinatesGrid();
