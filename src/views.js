@@ -38,18 +38,47 @@ export function displayGameboardTiles(gameboardDisplay, gameboardDisplayString) 
     }
 }
 
-function displayPotentialShip(tile, iterator, tilesList) {
+function displayPotentialShip(tile, iterator, tilesList, currentShip) {
     let xCoordinate = parseInt(tile.dataset.xCoordinate);
     let yCoordinate = parseInt(tile.dataset.yCoordinate);
     for (let gameTile of tilesList) {
         gameTile.style.cursor = 'pointer';
         friendlyGameboardDisplay.style.cursor = 'pointer';
     }
+    let canShowPortentialShip = true;
     if (verticalButton.classList.contains('selected') && yCoordinate + iterator < 10) {
-        document.querySelector(`[data-x-coordinate="${xCoordinate}"][data-y-coordinate="${yCoordinate + iterator}"]`).classList.add('ship-preview');
+        for (let k = 0; k < currentShip.length; k++) {
+            if (yCoordinate + k < 10 && document.querySelector(`[data-x-coordinate="${xCoordinate}"][data-y-coordinate="${yCoordinate + k}"]`).classList.contains('has-ship')) {
+                canShowPortentialShip = false;
+            }
+        }
+        if (canShowPortentialShip) {
+            document.querySelector(`[data-x-coordinate="${xCoordinate}"][data-y-coordinate="${yCoordinate + iterator}"]`).classList.add('ship-preview');
+        }
+        else {
+            for (let gameTile of tilesList) {
+                gameTile.classList.remove('ship-preview');
+                gameTile.style.cursor = 'not-allowed';
+                friendlyGameboardDisplay.style.cursor = 'not-allowed';
+            }
+        }
     }
     else if (horizontalButton.classList.contains('selected') && xCoordinate + iterator < 10) {
-        document.querySelector(`[data-x-coordinate="${xCoordinate + iterator}"][data-y-coordinate="${yCoordinate}"]`).classList.add('ship-preview');
+        for (let k = 0; k < currentShip.length; k++) {
+            if (xCoordinate + k < 10 && document.querySelector(`[data-x-coordinate="${xCoordinate + k}"][data-y-coordinate="${yCoordinate}"]`).classList.contains('has-ship')) {
+                canShowPortentialShip = false;
+            }
+        }
+        if (canShowPortentialShip) {
+            document.querySelector(`[data-x-coordinate="${xCoordinate + iterator}"][data-y-coordinate="${yCoordinate}"]`).classList.add('ship-preview');
+        }
+        else {
+            for (let gameTile of tilesList) {
+                gameTile.classList.remove('ship-preview');
+                gameTile.style.cursor = 'not-allowed';
+                friendlyGameboardDisplay.style.cursor = 'not-allowed';
+            }
+        }
     }
     else {
         for (let gameTile of tilesList) {
@@ -66,7 +95,7 @@ function highlightPotentialShipPlacement(event, tilesList, friendlyShipsList, fr
     if (friendlyGameboard.shipsList.length < 5) {
         currentShip = friendlyShipsList[friendlyGameboard.shipsList.length];
         for (let i = 0; i < currentShip.length; i++) {
-            displayPotentialShip(event.target, i, tilesList);
+            displayPotentialShip(event.target, i, tilesList, currentShip);
         }  
     }
     else {
