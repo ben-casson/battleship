@@ -4,6 +4,8 @@ import { friendlyGameboard,
 const verticalButton = document.getElementById('vertical-btn');
 const horizontalButton = document.getElementById('horizontal-btn');
 
+const gameplayText = document.getElementById('gameplay-text');
+
 export const friendlyGameboardDisplay = document.getElementById('friendly-gameboard');
 
 function changeSelectedButton(selectedButton, unselectedButton) {
@@ -83,6 +85,14 @@ export function showPotentialShipOnMouseover(tilesList) {
     });
 }
 
+function promptUserToPlaceNextShip(currentShip) {
+    let currentShipIndex = friendlyShipsList.indexOf(currentShip);
+    let nextShip = friendlyShipsList[currentShipIndex + 1];
+    if (currentShipIndex < friendlyShipsList.length - 1) {
+        gameplayText.innerText = `Place your ${nextShip.shipType}...`;
+    }
+}
+
 function setShipCoordinates(tilesList) {
     let currentShip;
     if (friendlyGameboard.shipsList.length < 5) {
@@ -96,9 +106,8 @@ function setShipCoordinates(tilesList) {
                 gameTile.classList.add('has-ship');
             }
         }
-        // console.log(currentShip.coordinates);
         friendlyGameboard.addShipToGameboard(currentShip);
-        console.log(friendlyGameboard.shipsList);
+        promptUserToPlaceNextShip(currentShip);
     }
 }
 
