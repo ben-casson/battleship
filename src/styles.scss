@@ -53,7 +53,7 @@ $dark-red: #710000;
     flex-grow: 1;
     max-width: 500px;
     padding: 10px 0px;
-    outline: 1px solid red;
+    // outline: 1px solid red;
     overflow-y: scroll;
 }
 
@@ -64,7 +64,7 @@ h1 {
 }
 
 #gameplay-text {
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: $light-gray;
 }
 
@@ -176,6 +176,10 @@ button {
         max-width: 300px;
         max-height: 300px;
     }
+}
+
+#enemy-waters {
+    text-align: center;
 }
 
 #friendly-gameboard {
