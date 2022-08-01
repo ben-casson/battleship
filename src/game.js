@@ -1,44 +1,34 @@
 import { createGameboard } from "./models/gameboard.js";
 import { createShip } from "./models/ship.js";
-import { changeShipOrientation,
-         displayGameboardTiles,
-         showPotentialShipOnMouseover,
-         friendlyGameboardDisplay,
-         addShipToGameboardDisplay} from "./views.js";
-
-const friendlyCarrier = createShip(5, 'Carrier');
-const friendlyBattleship = createShip(4, 'Battleship');
-const friendlyCruiser1 = createShip(3, 'first Cruiser');
-const friendlyCruiser2 = createShip(3, 'second Cruiser');
-const friendlyDestroyer = createShip(2, 'Destroyer');
-export const friendlyShipsList = [friendlyCarrier, friendlyBattleship, friendlyCruiser1, 
-                                    friendlyCruiser2, friendlyDestroyer]
+import { displayGameboardTiles, friendlyGameboardDisplay } from "./game-setup.js";
 
 const enemyCarrier = createShip(5, 'Carrier');
 const enemyBattleship = createShip(4, 'Battleship');
 const enemyCruiser1 = createShip(3, 'first Cruiser');
 const enemyCruiser2 = createShip(3, 'second Cruiser');
 const enemyDestroyer = createShip(2, 'Destroyer');
-
-export const friendlyGameboard = createGameboard();
-friendlyGameboard.generateCoordinatesGrid();
+export const enemyShipsList = [enemyCarrier, enemyBattleship, enemyCruiser1, 
+                               enemyCruiser2, enemyDestroyer]
 
 const enemyGameboard = createGameboard();
-enemyGameboard.generateCoordinatesGrid();
 
-function letUserPlaceShips(tilesList) {
-    changeShipOrientation();
-    friendlyGameboardDisplay.addEventListener('mouseleave', () => {
-        tilesList.forEach(tile => tile.classList.remove('ship-preview'));
+const enemyGameboardDisplay = document.getElementById('enemy-gameboard');
+const enemyGameboardDisplayContainer = document.getElementById('enemy-gameboard-container');
+
+const toggleButtonsContainer = document.getElementById('ship-orientation-toggle-container');
+
+const friendlyGameboardCover = document.getElementById('friendly-gameboard-cover');
+
+export function playGame(tilesList) {
+    enemyGameboardDisplayContainer.style.display = 'block';
+    toggleButtonsContainer.style.display = 'none';
+    friendlyGameboardCover.style.display = 'block';
+
+    friendlyGameboardCover.addEventListener('mouseover', () => {
+        friendlyGameboardCover.style.cursor = 'not-allowed';
     });
-    showPotentialShipOnMouseover(tilesList);
-    addShipToGameboardDisplay(tilesList); 
-}
 
-export function startApp() {
-    displayGameboardTiles(friendlyGameboardDisplay, 'friendly-gameboard-display');
-    const tilesList = [...document.querySelectorAll('.friendly-gameboard-display-tile')];
-    
-    letUserPlaceShips(tilesList);
-}
+    enemyGameboard.generateCoordinatesGrid();
 
+    displayGameboardTiles(enemyGameboardDisplay, 'enemy-gameboard-display');
+}
