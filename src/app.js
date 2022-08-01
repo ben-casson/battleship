@@ -8,11 +8,11 @@ import { changeShipOrientation,
 
 const friendlyCarrier = createShip(5, 'Carrier');
 const friendlyBattleship = createShip(4, 'Battleship');
-const friendlyCruiser1 = createShip(3, 'Cruiser');
-const friendlyCruiser2 = createShip(3, 'Submarine');
+const friendlyCruiser = createShip(3, 'Cruiser');
+const friendlySubmarine = createShip(3, 'Submarine');
 const friendlyDestroyer = createShip(2, 'Destroyer');
-export const friendlyShipsList = [friendlyCarrier, friendlyBattleship, friendlyCruiser1, 
-                                    friendlyCruiser2, friendlyDestroyer]
+export const friendlyShipsList = [friendlyCarrier, friendlyBattleship, friendlyCruiser, 
+                                  friendlySubmarine, friendlyDestroyer];
 
 export const friendlyGameboard = createGameboard();
 friendlyGameboard.generateCoordinatesGrid();
