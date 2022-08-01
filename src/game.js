@@ -4,8 +4,8 @@ import { displayGameboardTiles, friendlyGameboardDisplay } from "./game-setup.js
 
 const enemyCarrier = createShip(5, 'Carrier');
 const enemyBattleship = createShip(4, 'Battleship');
-const enemyCruiser1 = createShip(3, 'first Cruiser');
-const enemyCruiser2 = createShip(3, 'second Cruiser');
+const enemyCruiser1 = createShip(3, 'Cruiser');
+const enemyCruiser2 = createShip(3, 'Submarine');
 const enemyDestroyer = createShip(2, 'Destroyer');
 export const enemyShipsList = [enemyCarrier, enemyBattleship, enemyCruiser1, 
                                enemyCruiser2, enemyDestroyer]
