@@ -133,6 +133,7 @@ function setShipCoordinates(tilesList) {
                 gameTile.classList.add('has-ship');
             }
         }
+        //might be preventing placement
         friendlyGameboard.addShipToGameboard(currentShip);
         promptUserToPlaceNextShip(currentShip);
     }
@@ -145,7 +146,6 @@ export function addShipToGameboardDisplay(tilesList) {
                 highlightPotentialShipPlacement(event, tilesList, friendlyShipsList, friendlyGameboard);            
             });
         }, { once: true });
-        
     });
     if (friendlyGameboard.shipsList.length < 5) {
         tilesList.forEach(tile => {
