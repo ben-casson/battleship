@@ -4,7 +4,7 @@ import { playGame } from "./game.js";
 const verticalButton = document.getElementById('vertical-btn');
 const horizontalButton = document.getElementById('horizontal-btn');
 
-const gameplayText = document.getElementById('gameplay-text');
+export const gameplayText = document.getElementById('gameplay-text');
 
 export const friendlyGameboardDisplay = document.getElementById('friendly-gameboard');
 
@@ -151,9 +151,7 @@ export function addShipToGameboardDisplay(tilesList) {
         tilesList.forEach(tile => {
             tile.addEventListener('click', () => {
                 if (tile.style.cursor !== 'not-allowed') setShipCoordinates(tilesList);
-                if (friendlyGameboard.shipsList.length === 5) {
-                    playGame(tilesList);
-                }
+                if (friendlyGameboard.shipsList.length === 5) playGame(tilesList);
             }, { once: true });      
         });
     }
