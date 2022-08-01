@@ -94,7 +94,7 @@ h2 {
     height: 40px;
     border-radius: 20px;
     background-color: #161616; //272727
-    border: 1px solid $light-gray;
+    border: 2px solid #fff;
 }
 
 button {
@@ -109,7 +109,7 @@ button {
 }
 
 .selected {
-    background-color: $light-gray;
+    background-color: #fff;
     color: #000;
     font-size: 1.1rem;
     border-radius: 19px;
