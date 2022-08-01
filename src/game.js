@@ -35,7 +35,7 @@ function letUserPlaceShips(tilesList) {
     addShipToGameboardDisplay(tilesList); 
 }
 
-export function playGame() {
+export function startApp() {
     displayGameboardTiles(friendlyGameboardDisplay, 'friendly-gameboard-display');
     const tilesList = [...document.querySelectorAll('.friendly-gameboard-display-tile')];
     
