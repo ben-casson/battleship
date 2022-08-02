@@ -19,7 +19,7 @@ const toggleButtonsContainer = document.getElementById('ship-orientation-toggle-
 
 const friendlyGameboardCover = document.getElementById('friendly-gameboard-cover');
 
-function checkForValidPlacement(enemyShip, shipCoordinatesMap) {
+function checkForValidPlacement(enemyShip, shipCoordinatesMap, verticalOrHorizontal) {
     let randomNumber1 = Math.floor(Math.random() * (8));
     let randomNumber2 = Math.floor(Math.random() * (8));
     for (let i = 0; i < enemyShip.length; i++) {
@@ -31,7 +31,8 @@ function checkForValidPlacement(enemyShip, shipCoordinatesMap) {
         else {
             for (let coordinate of shipCoordinatesMap) {
                 for (let j = 0; j < enemyGameboard.shipsCoordinatesList.length; j++) {
-                    if (enemyGameboard.shipsCoordinatesList[j] === coordinate) {
+                    if (enemyGameboard.shipsCoordinatesList[j][0] === coordinate[0]
+                        && enemyGameboard.shipsCoordinatesList[j][1] === coordinate[1]) {
                         let tempVal = enemyGameboard.shipsCoordinatesList[0];
                         enemyGameboard.shipsCoordinatesList[0] = enemyGameboard.shipsCoordinatesList[j];
                         enemyGameboard.shipsCoordinatesList[j] = tempVal;
@@ -48,7 +49,8 @@ function checkForValidPlacement(enemyShip, shipCoordinatesMap) {
 function placeEnemyShips() {
     for (let enemyShip of enemyShipsList) {
         let shipCoordinatesMap = new Map();
-        checkForValidPlacement(enemyShip, shipCoordinatesMap);
+        let verticalOrHorizontal = Math.floor(Math.random() * (2) + 1);
+        checkForValidPlacement(enemyShip, shipCoordinatesMap, verticalOrHorizontal);
         let enemyXCoordinate;
         let enemyYCoordinate;
         for (let m = 0; m < enemyShip.length; m++) {
