@@ -19,9 +19,47 @@ const toggleButtonsContainer = document.getElementById('ship-orientation-toggle-
 
 const friendlyGameboardCover = document.getElementById('friendly-gameboard-cover');
 
+function checkForValidPlacement(enemyShip, shipCoordinatesMap) {
+    let randomNumber1 = Math.floor(Math.random() * (8));
+    let randomNumber2 = Math.floor(Math.random() * (8));
+    for (let i = 0; i < enemyShip.length; i++) {
+        if (!enemyGameboard.shipsCoordinatesList.includes([randomNumber1, randomNumber2])) {
+            shipCoordinatesMap.set(`${i}`, [randomNumber1, randomNumber2]);
+            enemyGameboard.shipsCoordinatesList.push(shipCoordinatesMap.get(`${i}`));
+        }
+        else {
+            for (let coordinate of shipCoordinatesMap) {
+                for (let j = 0; j < enemyGameboard.shipsCoordinatesList.length; j++) {
+                    if (enemyGameboard.shipsCoordinatesList[j] === coordinate) {
+                        let tempVal = enemyGameboard.shipsCoordinatesList[0];
+                        enemyGameboard.shipsCoordinatesList[0] = enemyGameboard.shipsCoordinatesList[j];
+                        enemyGameboard.shipsCoordinatesList[j] = tempVal;
+                        enemyGameboard.shipsCoordinatesList.shift();
+                    }
+                }
+            }
+            shipCoordinatesMap.clear();
+            checkForValidPlacement(enemyShip, shipCoordinatesMap);
+        }
+    }
+}
+
 function placeEnemyShips() {
     for (let enemyShip of enemyShipsList) {
-
+        let shipCoordinatesMap = new Map();
+        checkForValidPlacement(enemyShip, shipCoordinatesMap);
+        let enemyXCoordinate;
+        let enemyYCoordinate;
+        for (let m = 0; m < enemyShip.length; m++) {
+            // enemyGameboard.shipsCoordinatesList.push(shipCoordinatesMap.get(`${m}`));
+            enemyXCoordinate = shipCoordinatesMap.get(`${m}`)[0];
+            enemyYCoordinate = shipCoordinatesMap.get(`${m}`)[1];
+            enemyShip.coordinates.push(new Map().set('x', enemyXCoordinate)
+                                                .set('y', enemyYCoordinate)
+                                                .set('hit', false));
+            document.querySelector(`[data-x-coordinate="${enemyXCoordinate}"][data-y-coordinate="${enemyYCoordinate}"]`).classList.add('has-ship');
+            enemyGameboard.addShipToGameboard(enemyShip);
+        }
     }
 }
 
@@ -39,5 +77,8 @@ export function playGame(tilesList) {
 
     displayGameboardTiles(enemyGameboardDisplay, 'enemy-gameboard-display');
 
-
+    placeEnemyShips();
+    console.log(enemyGameboard.coordinatesGrid);
+    console.log(enemyGameboard.shipsCoordinatesList);
+    console.log(enemyGameboard.shipsList);
 }
