@@ -23,9 +23,16 @@ function checkForValidPlacement(enemyShip, shipCoordinatesMap, verticalOrHorizon
     let randomNumber1 = Math.floor(Math.random() * (8));
     let randomNumber2 = Math.floor(Math.random() * (8));
     for (let i = 0; i < enemyShip.length; i++) {
-        if (!enemyGameboard.shipsCoordinatesList.includes([randomNumber1 + i, randomNumber2])
+        if (verticalOrHorizontal === 1 
+            && !enemyGameboard.shipsCoordinatesList.includes([randomNumber1 + i, randomNumber2])
             && randomNumber1 + i < 10) {
             shipCoordinatesMap.set(`${i}`, [randomNumber1 + i, randomNumber2]);
+            enemyGameboard.shipsCoordinatesList.push(shipCoordinatesMap.get(`${i}`));
+        }
+        else if (verticalOrHorizontal === 2 
+                 && !enemyGameboard.shipsCoordinatesList.includes([randomNumber1, randomNumber2 + i])
+                 && randomNumber2 + i < 10) {
+            shipCoordinatesMap.set(`${i}`, [randomNumber1, randomNumber2 + i]);
             enemyGameboard.shipsCoordinatesList.push(shipCoordinatesMap.get(`${i}`));
         }
         else {
@@ -33,9 +40,12 @@ function checkForValidPlacement(enemyShip, shipCoordinatesMap, verticalOrHorizon
                 for (let j = 0; j < enemyGameboard.shipsCoordinatesList.length; j++) {
                     if (enemyGameboard.shipsCoordinatesList[j][0] === coordinate[0]
                         && enemyGameboard.shipsCoordinatesList[j][1] === coordinate[1]) {
-                        let tempVal = enemyGameboard.shipsCoordinatesList[0];
-                        enemyGameboard.shipsCoordinatesList[0] = enemyGameboard.shipsCoordinatesList[j];
-                        enemyGameboard.shipsCoordinatesList[j] = tempVal;
+                        let tempVal1 = enemyGameboard.shipsCoordinatesList[0][0];
+                        let tempVal2 = enemyGameboard.shipsCoordinatesList[0][1];
+                        enemyGameboard.shipsCoordinatesList[0][0] = enemyGameboard.shipsCoordinatesList[j][0];
+                        enemyGameboard.shipsCoordinatesList[0][1] = enemyGameboard.shipsCoordinatesList[j][1];
+                        enemyGameboard.shipsCoordinatesList[j][0] = tempVal1;
+                        enemyGameboard.shipsCoordinatesList[j][1] = tempVal2;
                         enemyGameboard.shipsCoordinatesList.shift();
                     }
                 }
@@ -44,6 +54,8 @@ function checkForValidPlacement(enemyShip, shipCoordinatesMap, verticalOrHorizon
             checkForValidPlacement(enemyShip, shipCoordinatesMap);
         }
     }
+    console.log(enemyShip.shipType);
+    console.log(enemyShip.coordinates);
 }
 
 function placeEnemyShips() {
