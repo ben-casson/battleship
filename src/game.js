@@ -25,13 +25,13 @@ function checkForValidPlacement(enemyShip, shipCoordinatesMap, verticalOrHorizon
     for (let i = 0; i < enemyShip.length; i++) {
         if (verticalOrHorizontal === 1 
             && !enemyGameboard.shipsCoordinatesList.includes([randomNumber1 + i, randomNumber2])
-            && randomNumber1 + i < 10) {
+            && randomNumber1 + enemyShip.length < 10) {
             shipCoordinatesMap.set(`${i}`, [randomNumber1 + i, randomNumber2]);
             enemyGameboard.shipsCoordinatesList.push(shipCoordinatesMap.get(`${i}`));
         }
         else if (verticalOrHorizontal === 2 
                  && !enemyGameboard.shipsCoordinatesList.includes([randomNumber1, randomNumber2 + i])
-                 && randomNumber2 + i < 10) {
+                 && randomNumber2 + enemyShip.length < 10) {
             shipCoordinatesMap.set(`${i}`, [randomNumber1, randomNumber2 + i]);
             enemyGameboard.shipsCoordinatesList.push(shipCoordinatesMap.get(`${i}`));
         }
