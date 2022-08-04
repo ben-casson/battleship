@@ -1,6 +1,7 @@
 import { createGameboard } from "./models/gameboard.js";
 import { createShip } from "./models/ship.js";
 import { displayGameboardTiles, gameplayText } from "./game-setup.js";
+import { friendlyGameboard } from "./app.js";
 
 const enemyCarrier = createShip(5, 'Carrier');
 const enemyBattleship = createShip(4, 'Battleship');
@@ -157,95 +158,115 @@ function removePositionContainingUsedCoordinate(shipLength, horizontalList, xCoo
     }
 }
 
+function takeTurn() {
+        for (let row = 0; row < 10; row++) {
+            for (let column = 0; column < 10; column++) {
+                let tile = document.querySelector(`[data-x-coordinate="${column}"][data-y-coordinate="${row}"]`);
+                if (!tile.classList.contains('hit') || !tile.classList.contains('miss')) {
+                    tile.addEventListener('click', () => {
+                        if (tile.classList.contains('enemy-ship')) {
+                            tile.classList.add('hit');
+                            enemyGameboard.coordinatesGrid[row][column].get('ship').hit(column, row);
+                            if (enemyGameboard.allShipsAreSunk()) {
+                                console.log('player1 wins')
+                            }
+                        }
+                        else {
+                            tile.classList.add('miss');
+                        }
+                    });
+                }
+            }
+        }
+}
+
 function placeEnemyShips() {
     for (let enemyShip of enemyShipsList) {
-        if (enemyShip.length === 5) {
+        if (enemyGameboard.shipsList.length === 0) {
             // console.log(listofLength5ShipHorizontalPositions.length)
             let randomIndex = Math.floor(Math.random() * (listofLength5ShipHorizontalPositions.length - 1));
+            console.log(randomIndex)
+            console.log(listofLength5ShipHorizontalPositions.length)
             // console.log(randomIndex)
             for (let e = 0; e < 5; e++) {
-                console.log(randomIndex)
+                // console.log(randomIndex)
                 let tempXCoordinate = listofLength5ShipHorizontalPositions[randomIndex][e][0];
                 let tempYCoordinate = listofLength5ShipHorizontalPositions[randomIndex][e][1];
                 enemyShip.coordinates.push(new Map().set('x', tempXCoordinate)
                                                     .set('y', tempYCoordinate)
                                                     .set('hit', false));
-                document.querySelector(`[data-x-coordinate="${tempXCoordinate}"][data-y-coordinate="${tempYCoordinate}"]`).classList.add('has-ship');                                  
+                document.querySelector(`[data-x-coordinate="${tempXCoordinate}"][data-y-coordinate="${tempYCoordinate}"]`).classList.add('enemy-ship');                                  
             }
-            for (let coordinate of enemyShip.coordinates) {
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength5ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength4ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength3ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength2ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-            }
+            // for (let coordinate of enemyShip.coordinates) {
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength5ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength4ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength3ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength2ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            // }
         }
-        else if (enemyShip.length === 4) {
+        else if (enemyGameboard.shipsList.length === 1) {
             let randomIndex = Math.floor(Math.random() *  (listofLength4ShipHorizontalPositions.length - 1));
+            console.log(randomIndex)
+            console.log(listofLength4ShipHorizontalPositions.length)
             for (let e = 0; e < 4; e++) {
                 let tempXCoordinate = listofLength4ShipHorizontalPositions[randomIndex][e][0];
                 let tempYCoordinate = listofLength4ShipHorizontalPositions[randomIndex][e][1];
                 enemyShip.coordinates.push(new Map().set('x', tempXCoordinate)
                                                     .set('y', tempYCoordinate)
                                                     .set('hit', false));
-                document.querySelector(`[data-x-coordinate="${tempXCoordinate}"][data-y-coordinate="${tempYCoordinate}"]`).classList.add('has-ship');
+                document.querySelector(`[data-x-coordinate="${tempXCoordinate}"][data-y-coordinate="${tempYCoordinate}"]`).classList.add('enemy-ship');
             }
-            for (let coordinate of enemyShip.coordinates) {
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength5ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength4ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength3ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength2ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-            }
+            // for (let coordinate of enemyShip.coordinates) {
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength5ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength4ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength3ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength2ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            // }
         }
-        else if (enemyShip.length === 3) {
+        else if (enemyGameboard.shipsList.length === 2 || enemyGameboard.shipsList.length === 3) {
             let randomIndex = Math.floor(Math.random() *  (listofLength3ShipHorizontalPositions.length - 1));
+            console.log(randomIndex)
+            console.log(listofLength3ShipHorizontalPositions.length)
             for (let e = 0; e < 3; e++) {
                 let tempXCoordinate = listofLength3ShipHorizontalPositions[randomIndex][e][0];
                 let tempYCoordinate = listofLength3ShipHorizontalPositions[randomIndex][e][1];
                 enemyShip.coordinates.push(new Map().set('x', tempXCoordinate)
                                                     .set('y', tempYCoordinate)
                                                     .set('hit', false));
-                document.querySelector(`[data-x-coordinate="${tempXCoordinate}"][data-y-coordinate="${tempYCoordinate}"]`).classList.add('has-ship');
+                document.querySelector(`[data-x-coordinate="${tempXCoordinate}"][data-y-coordinate="${tempYCoordinate}"]`).classList.add('enemy-ship');
             }
-            for (let coordinate of enemyShip.coordinates) {
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength5ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength4ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength3ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength2ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-            }
+            // for (let coordinate of enemyShip.coordinates) {
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength5ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength4ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength3ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength2ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            // }
         }
         else {
             let randomIndex = Math.floor(Math.random() *  (listofLength2ShipHorizontalPositions.length - 1));
+            console.log(randomIndex)
+            console.log(listofLength2ShipHorizontalPositions.length)
             for (let e = 0; e < 2; e++) {
                 let tempXCoordinate = listofLength2ShipHorizontalPositions[randomIndex][e][0];
                 let tempYCoordinate = listofLength2ShipHorizontalPositions[randomIndex][e][1];
                 enemyShip.coordinates.push(new Map().set('x', tempXCoordinate)
                                                     .set('y', tempYCoordinate)
                                                     .set('hit', false));
-                document.querySelector(`[data-x-coordinate="${tempXCoordinate}"][data-y-coordinate="${tempYCoordinate}"]`).classList.add('has-ship');
+                document.querySelector(`[data-x-coordinate="${tempXCoordinate}"][data-y-coordinate="${tempYCoordinate}"]`).classList.add('enemy-ship');
             }
-            for (let coordinate of enemyShip.coordinates) {
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength5ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength4ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength3ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-                removePositionContainingUsedCoordinate(enemyShip.length, listofLength2ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
-            }
+            // for (let coordinate of enemyShip.coordinates) {
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength5ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength4ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength3ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            //     removePositionContainingUsedCoordinate(enemyShip.length, listofLength2ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+            // }
         }
         enemyGameboard.addShipToGameboard(enemyShip);
         // console.log(listofLength2ShipHorizontalPositions)
     }
     // console.log(enemyGameboard.coordinatesGrid)
-    let tileSWithShip = 0;
-    for (let row = 0; row < 10; row++) {
-        for (let column = 0; column < 10; column++) {
-            if (document.querySelector(`[data-x-coordinate="${column}"][data-y-coordinate="${row}"]`).classList.contains('has-ship')) {
-                tileSWithShip++;
-            }
-        }
-    }
-    if (tileSWithShip !== 17) {
-        enemyGameboard.generateCoordinatesGrid();
-        addInitialPotentialPositions();
-        placeEnemyShips();
+    if (enemyGameboard.shipsList.length === 5) {
+        takeTurn();
     }
 }
 
@@ -269,5 +290,5 @@ export function playGame(tilesList) {
     placeEnemyShips();
     console.log(enemyGameboard.coordinatesGrid);
     // console.log(enemyGameboard.shipsCoordinatesList);
-    console.log(enemyGameboard.shipsList);
+    // console.log(enemyGameboard.shipsList);
 }
