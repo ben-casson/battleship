@@ -1,7 +1,7 @@
 import { createGameboard } from "./models/gameboard.js";
 import { createShip } from "./models/ship.js";
 import { displayGameboardTiles, gameplayText } from "./game-setup.js";
-import { friendlyGameboard } from "./app.js";
+import { friendlyGameboard, startApp } from "./app.js";
 
 const enemyCarrier = createShip(5, 'Carrier');
 const enemyBattleship = createShip(4, 'Battleship');
@@ -159,25 +159,46 @@ function removePositionContainingUsedCoordinate(shipLength, horizontalList, xCoo
 }
 
 function takeTurn() {
-        for (let row = 0; row < 10; row++) {
-            for (let column = 0; column < 10; column++) {
-                let tile = document.querySelector(`[data-x-coordinate="${column}"][data-y-coordinate="${row}"]`);
-                if (!tile.classList.contains('hit') || !tile.classList.contains('miss')) {
-                    tile.addEventListener('click', () => {
-                        if (tile.classList.contains('enemy-ship')) {
-                            tile.classList.add('hit');
-                            enemyGameboard.coordinatesGrid[row][column].get('ship').hit(column, row);
-                            if (enemyGameboard.allShipsAreSunk()) {
-                                console.log('player1 wins')
-                            }
-                        }
-                        else {
-                            tile.classList.add('miss');
-                        }
-                    });
-                }
+    let hitCount = 0;
+    let enemyShipTilesCount = 0;
+    for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+            if (enemyGameboard.coordinatesGrid[i][j].get('ship') !== 'none') {
+                enemyShipTilesCount++;
             }
         }
+    }
+    for (let row = 0; row < 10; row++) {
+        for (let column = 0; column < 10; column++) {
+            let tile = document.querySelector(`[data-x-coordinate="${column}"][data-y-coordinate="${row}"]`);
+            if (!tile.classList.contains('hit') || !tile.classList.contains('miss')) {
+                tile.addEventListener('click', () => {
+                    if (tile.classList.contains('enemy-ship')) {
+                        tile.classList.add('hit');
+                        enemyGameboard.coordinatesGrid[row][column].get('ship').hit(column, row);
+                        if (enemyGameboard.allShipsAreSunk()) {
+                            alert('WINNER WINNER CHICKEN DINNER!')
+                        }
+                        hitCount = 0;
+                        for (let i = 0; i < 10; i++) {
+                            for (let j = 0; j < 10; j++) {
+                                if (document.querySelector(`[data-x-coordinate="${j}"][data-y-coordinate="${i}"]`).classList.contains('hit')) {
+                                    hitCount++;
+                                }
+                            }
+                        }
+                        if (hitCount === enemyShipTilesCount) {
+                            alert('WINNER WINNER CHICKEN DINNER!');
+                            window.history.go(0);
+                        }
+                    }
+                    else {
+                        tile.classList.add('miss');
+                    }
+                });
+            }
+        }
+    }
 }
 
 function placeEnemyShips() {
@@ -288,7 +309,7 @@ export function playGame(tilesList) {
     // console.log(listofLength5ShipHorizontalPositions)
     addInitialPotentialPositions();
     placeEnemyShips();
-    console.log(enemyGameboard.coordinatesGrid);
+    // console.log(enemyGameboard.coordinatesGrid);
     // console.log(enemyGameboard.shipsCoordinatesList);
-    // console.log(enemyGameboard.shipsList);
+    console.log(enemyGameboard.shipsList);
 }
