@@ -234,6 +234,19 @@ function placeEnemyShips() {
         // console.log(listofLength2ShipHorizontalPositions)
     }
     // console.log(enemyGameboard.coordinatesGrid)
+    let tileSWithShip = 0;
+    for (let row = 0; row < 10; row++) {
+        for (let column = 0; column < 10; column++) {
+            if (document.querySelector(`[data-x-coordinate="${column}"][data-y-coordinate="${row}"]`).classList.contains('has-ship')) {
+                tileSWithShip++;
+            }
+        }
+    }
+    if (tileSWithShip !== 17) {
+        enemyGameboard.generateCoordinatesGrid();
+        addInitialPotentialPositions();
+        placeEnemyShips();
+    }
 }
 
 export function playGame(tilesList) {

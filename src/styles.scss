@@ -215,3 +215,20 @@ button {
     // -ms-transition: background-color 500ms ease-in;
     // transition: background-color 500ms ease-in;
 }
+
+#enemy-gameboard {
+    .tile {
+        background-color: #274670;
+        border-radius: 50%;
+        // box-shadow: inset 0px 0px 5px 0px $blue; //$blue
+        box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.452);
+    }
+    .has-ship {
+        background-color: $gray; //$gray
+        box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.37);
+        // border: 7px solid $blue;
+        // -webkit-transition: background-color 500ms ease-in;
+        // -ms-transition: background-color 500ms ease-in;
+        // transition: background-color 500ms ease-in;
+    }
+}
