@@ -217,18 +217,22 @@ button {
 }
 
 #enemy-gameboard {
+    cursor: crosshair;
     .tile {
-        background-color: #274670;
-        border-radius: 50%;
-        // box-shadow: inset 0px 0px 5px 0px $blue; //$blue
-        box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.452);
+        cursor: crosshair;
     }
-    .has-ship {
-        background-color: $gray; //$gray
-        box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.37);
+    .hit {
+        background-color: $dark-red; //$gray
+        box-shadow: inset 0px 0px 15px rgb(0, 0, 0);
         // border: 7px solid $blue;
         // -webkit-transition: background-color 500ms ease-in;
         // -ms-transition: background-color 500ms ease-in;
         // transition: background-color 500ms ease-in;
+    }
+    .miss {
+        background-color: #315383;// #274670
+        border-radius: 50%;
+        // box-shadow: inset 0px 0px 5px 0px $blue; //$blue
+        box-shadow: inset 0px 0px 15px rgba(1, 8, 31, 0.678);
     }
 }
