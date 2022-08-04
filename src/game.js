@@ -19,6 +19,7 @@ const toggleButtonsContainer = document.getElementById('ship-orientation-toggle-
 
 const friendlyGameboardCover = document.getElementById('friendly-gameboard-cover');
 
+
 // function checkForValidPlacement(enemyShip, shipCoordinatesMap, verticalOrHorizontal) {
 //     let randomNumber1 = Math.floor(Math.random() * (8));
 //     let randomNumber2 = Math.floor(Math.random() * (8));
@@ -54,8 +55,8 @@ const friendlyGameboardCover = document.getElementById('friendly-gameboard-cover
 //             checkForValidPlacement(enemyShip, shipCoordinatesMap);
 //         }
 //     }
-//     console.log(enemyShip.shipType);
-//     console.log(enemyShip.coordinates);
+    // console.log(enemyShip.shipType);
+    // console.log(enemyShip.coordinates);
 // }
 
 // function placeEnemyShips() {
@@ -102,18 +103,22 @@ const listsOfOpenVerticalShipPositions = [listofLength5ShipVerticalPositions, li
 //     listsOfOpenHorizontalShipPositions.push(list);
 // }   
 
-const listofLength5ShipHorizontalPositions = [];
+const listofLength5ShipHorizontalPositions = new Array();
 const listofLength4ShipHorizontalPositions = [];
 const listofLength3ShipHorizontalPositions = [];
 const listofLength2ShipHorizontalPositions = [];
-
+const listsOfOpenHorizontalShipPositions = [listofLength5ShipHorizontalPositions, listofLength4ShipHorizontalPositions,
+                                            listofLength3ShipHorizontalPositions, listofLength2ShipHorizontalPositions];
 
 function addInitialPossibleHorizontalShipPositions(list, length) {
     for (let row = 0; row < 10; row++) {
         for (let j = 0; j < 10 - length + 1; j++) {
             const tempArr = [];
-            for (let b = 0; b < length; b++) {
-                tempArr.push([j + b, row]);
+            for (let b = j; b < j + length; b++) {
+                const tempArr2 = [];
+                tempArr2.push(b);
+                tempArr2.push(row);
+                tempArr.push(tempArr2);
             }
             list.push(tempArr);
         }
@@ -122,70 +127,113 @@ function addInitialPossibleHorizontalShipPositions(list, length) {
 
 function addInitialPotentialPositions() {
     addInitialPossibleHorizontalShipPositions(listofLength5ShipHorizontalPositions, 5);
+    // console.log(listofLength5ShipHorizontalPositions)
     addInitialPossibleHorizontalShipPositions(listofLength4ShipHorizontalPositions, 4);
+    // console.log(listofLength4ShipHorizontalPositions)
     addInitialPossibleHorizontalShipPositions(listofLength3ShipHorizontalPositions, 3);
+    // console.log(listofLength3ShipHorizontalPositions)
     addInitialPossibleHorizontalShipPositions(listofLength2ShipHorizontalPositions, 2);
+    // console.log(listofLength2ShipHorizontalPositions)
+}
+
+
+
+
+function removePositionContainingUsedCoordinate(shipLength, horizontalList, xCoordinate, yCoordinate) {
+    for (let i = 0; i < horizontalList.length; i++) {
+        // console.log(horizontalList[i])
+        for (let j = 0; j < horizontalList[i].length; j++) {
+            if (horizontalList[i][j][0] === xCoordinate && horizontalList[i][j][1] === yCoordinate) {
+                // let tempArr = list[0];
+                // list[0] = list[i];
+                // list[i] = tempArr;
+                // list.shift(); 
+                // horizontalList[i][j].length = 0;
+                // horizontalList[i].length = 0;
+                horizontalList[i].flat();
+                horizontalList = horizontalList.filter(arr => arr.length !== (shipLength * 2));
+            }
+        }
+    }
 }
 
 function placeEnemyShips() {
     for (let enemyShip of enemyShipsList) {
         if (enemyShip.length === 5) {
-            console.log(listofLength5ShipHorizontalPositions.length)
+            // console.log(listofLength5ShipHorizontalPositions.length)
             let randomIndex = Math.floor(Math.random() * (listofLength5ShipHorizontalPositions.length - 1));
-            console.log(randomIndex)
+            // console.log(randomIndex)
             for (let e = 0; e < 5; e++) {
-                enemyShip.coordinates.push(new Map().set('x', listofLength5ShipHorizontalPositions[randomIndex][e][0])
-                                                    .set('y', listofLength5ShipHorizontalPositions[randomIndex][e][1])
+                console.log(randomIndex)
+                let tempXCoordinate = listofLength5ShipHorizontalPositions[randomIndex][e][0];
+                let tempYCoordinate = listofLength5ShipHorizontalPositions[randomIndex][e][1];
+                enemyShip.coordinates.push(new Map().set('x', tempXCoordinate)
+                                                    .set('y', tempYCoordinate)
                                                     .set('hit', false));
-                document.querySelector(`[data-x-coordinate="${listofLength5ShipHorizontalPositions[randomIndex][e][0]}"][data-y-coordinate="${listofLength5ShipHorizontalPositions[randomIndex][e][1]}"]`).classList.add('has-ship');                                  
-                // let tempArr = listofLength5ShipHorizontalPositions[0];
-                // listofLength5ShipHorizontalPositions[0] = listofLength5ShipHorizontalPositions[randomIndex];
-                // listofLength5ShipHorizontalPositions[randomIndex] = tempArr;
-                // listofLength5ShipHorizontalPositions.shift();    
+                document.querySelector(`[data-x-coordinate="${tempXCoordinate}"][data-y-coordinate="${tempYCoordinate}"]`).classList.add('has-ship');                                  
+            }
+            for (let coordinate of enemyShip.coordinates) {
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength5ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength4ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength3ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength2ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
             }
         }
         else if (enemyShip.length === 4) {
             let randomIndex = Math.floor(Math.random() *  (listofLength4ShipHorizontalPositions.length - 1));
             for (let e = 0; e < 4; e++) {
-                enemyShip.coordinates.push(new Map().set('x', listofLength4ShipHorizontalPositions[randomIndex][e][0])
-                                                    .set('y', listofLength4ShipHorizontalPositions[randomIndex][e][1])
+                let tempXCoordinate = listofLength4ShipHorizontalPositions[randomIndex][e][0];
+                let tempYCoordinate = listofLength4ShipHorizontalPositions[randomIndex][e][1];
+                enemyShip.coordinates.push(new Map().set('x', tempXCoordinate)
+                                                    .set('y', tempYCoordinate)
                                                     .set('hit', false));
-                document.querySelector(`[data-x-coordinate="${listofLength4ShipHorizontalPositions[randomIndex][e][0]}"][data-y-coordinate="${listofLength4ShipHorizontalPositions[randomIndex][e][1]}"]`).classList.add('has-ship');                                                                     
-                // let tempArr = listofLength4ShipHorizontalPositions[0];
-                // listofLength4ShipHorizontalPositions[0] = listofLength4ShipHorizontalPositions[randomIndex];
-                // listofLength4ShipHorizontalPositions[randomIndex] = tempArr;
-                // listofLength4ShipHorizontalPositions.shift();   
+                document.querySelector(`[data-x-coordinate="${tempXCoordinate}"][data-y-coordinate="${tempYCoordinate}"]`).classList.add('has-ship');
+            }
+            for (let coordinate of enemyShip.coordinates) {
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength5ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength4ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength3ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength2ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
             }
         }
         else if (enemyShip.length === 3) {
             let randomIndex = Math.floor(Math.random() *  (listofLength3ShipHorizontalPositions.length - 1));
             for (let e = 0; e < 3; e++) {
-                enemyShip.coordinates.push(new Map().set('x', listofLength3ShipHorizontalPositions[randomIndex][e][0])
-                                                    .set('y', listofLength3ShipHorizontalPositions[randomIndex][e][1])
+                let tempXCoordinate = listofLength3ShipHorizontalPositions[randomIndex][e][0];
+                let tempYCoordinate = listofLength3ShipHorizontalPositions[randomIndex][e][1];
+                enemyShip.coordinates.push(new Map().set('x', tempXCoordinate)
+                                                    .set('y', tempYCoordinate)
                                                     .set('hit', false));
-                document.querySelector(`[data-x-coordinate="${listofLength3ShipHorizontalPositions[randomIndex][e][0]}"][data-y-coordinate="${listofLength3ShipHorizontalPositions[randomIndex][e][1]}"]`).classList.add('has-ship');                                                                      
-                // let tempArr = listofLength3ShipHorizontalPositions[0];
-                // listofLength3ShipHorizontalPositions[0] = listofLength3ShipHorizontalPositions[randomIndex];
-                // listofLength3ShipHorizontalPositions[randomIndex] = tempArr;
-                // listofLength3ShipHorizontalPositions.shift();  
+                document.querySelector(`[data-x-coordinate="${tempXCoordinate}"][data-y-coordinate="${tempYCoordinate}"]`).classList.add('has-ship');
+            }
+            for (let coordinate of enemyShip.coordinates) {
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength5ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength4ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength3ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength2ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
             }
         }
         else {
             let randomIndex = Math.floor(Math.random() *  (listofLength2ShipHorizontalPositions.length - 1));
             for (let e = 0; e < 2; e++) {
-                enemyShip.coordinates.push(new Map().set('x', listofLength2ShipHorizontalPositions[randomIndex][e][0])
-                                                    .set('y', listofLength2ShipHorizontalPositions[randomIndex][e][1])
+                let tempXCoordinate = listofLength2ShipHorizontalPositions[randomIndex][e][0];
+                let tempYCoordinate = listofLength2ShipHorizontalPositions[randomIndex][e][1];
+                enemyShip.coordinates.push(new Map().set('x', tempXCoordinate)
+                                                    .set('y', tempYCoordinate)
                                                     .set('hit', false));
-                document.querySelector(`[data-x-coordinate="${listofLength2ShipHorizontalPositions[randomIndex][e][0]}"][data-y-coordinate="${listofLength2ShipHorizontalPositions[randomIndex][e][1]}"]`).classList.add('has-ship');                                                                 
-                // let tempArr = listofLength2ShipHorizontalPositions[0];
-                // listofLength2ShipHorizontalPositions[0] = listofLength2ShipHorizontalPositions[randomIndex];
-                // listofLength2ShipHorizontalPositions[randomIndex] = tempArr;
-                // listofLength2ShipHorizontalPositions.shift();       
+                document.querySelector(`[data-x-coordinate="${tempXCoordinate}"][data-y-coordinate="${tempYCoordinate}"]`).classList.add('has-ship');
+            }
+            for (let coordinate of enemyShip.coordinates) {
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength5ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength4ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength3ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
+                removePositionContainingUsedCoordinate(enemyShip.length, listofLength2ShipHorizontalPositions, coordinate.get('x'), coordinate.get('y'));
             }
         }
         enemyGameboard.addShipToGameboard(enemyShip);
+        // console.log(listofLength2ShipHorizontalPositions)
     }
-    console.log(enemyGameboard.coordinatesGrid)
+    // console.log(enemyGameboard.coordinatesGrid)
 }
 
 export function playGame(tilesList) {
@@ -202,9 +250,9 @@ export function playGame(tilesList) {
 
     displayGameboardTiles(enemyGameboardDisplay, 'enemy-gameboard-display');
 
+    
+    // console.log(listofLength5ShipHorizontalPositions)
     addInitialPotentialPositions();
-    console.log(listofLength5ShipHorizontalPositions)
-
     placeEnemyShips();
     console.log(enemyGameboard.coordinatesGrid);
     // console.log(enemyGameboard.shipsCoordinatesList);
