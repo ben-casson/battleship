@@ -1,6 +1,6 @@
 import { createGameboard } from "./models/gameboard.js";
 import { createShip } from "./models/ship.js";
-import { displayGameboardTiles, gameplayText } from "./game-setup.js";
+import { displayGameboardTiles, gameplayText, friendlyGameboardDisplay } from "./game-setup.js";
 import { friendlyGameboard, startApp } from "./app.js";
 
 const enemyCarrier = createShip(5, 'Carrier');
@@ -158,7 +158,64 @@ function removePositionContainingUsedCoordinate(shipLength, horizontalList, xCoo
     }
 }
 
-function takeTurn() {
+function computerAttacks(friendylShipsHitCount) {
+    const friendlyTiles = [...friendlyGameboardDisplay.children];
+    console.log(friendlyTiles);
+    let randomRow = Math.floor(Math.random() * 10);
+    let randomColumn = Math.floor(Math.random() * 10);
+    // console.log(randomRow)
+    // console.log(randomColumn)
+    loop1:
+    for (let i = 0; i < friendlyTiles.length; i++) {
+        if (friendlyTiles[i].dataset.xCoordinate === `${randomColumn}`
+            && friendlyTiles[i].dataset.yCoordinate === `${randomRow}`) {
+            if (friendlyTiles[i].classList.contains('hit') || friendlyTiles[i].classList.contains('miss')) {
+                break loop1;//break loop1 || continue
+            }
+            else {
+                if (friendlyTiles[i].classList.contains('has-ship')) {
+                    friendlyTiles[i].classList.add('hit');
+                    console.log('hit');
+                    friendylShipsHitCount++;
+                    console.log(friendylShipsHitCount)
+                    friendlyGameboard.coordinatesGrid[randomRow][randomColumn].get('ship').hit(randomColumn, randomRow);
+                    // friendlyGameboard.receiveAttack(friendlyTiles[i], randomColumn, randomRow);
+                    // if (friendlyGameboard.allShipsAreSunk()) {
+                    //     alert('You lose!');
+                    //     window.history.go(0);
+                    // }
+                    // friendylShipsHitCount = 0;
+                    for (let p = 0; p < friendlyTiles.length; p++) {
+                        if (friendlyTiles[p].classList.contains('hit')) {
+                            friendylShipsHitCount++;
+                        }
+                    }
+                    // friendlyShipTilesCount = 0;
+                    // for (let ii = 0; ii < 10; ii++) {
+                    //     for (let jj = 0; jj < 10; jj++) {
+                    //         if (friendlyGameboard.coordinatesGrid[ii][jj].get('ship') !== 'none') {
+                    //             friendlyShipTilesCount++;
+                    //         }
+                    //     }
+                    // }
+                    if (friendylShipsHitCount === 17) {
+                        alert('You lose!');
+                        window.history.go(0);
+                    }
+                    return;
+                }
+                else {
+                    friendlyTiles[i].classList.add('miss');
+                    return;
+                }
+            }
+
+        }
+    }
+    computerAttacks(friendylShipsHitCount);
+}
+
+function takeTurn(friendylShipsHitCount) {
     let hitCount = 0;
     let enemyShipTilesCount = 0;
     for (let i = 0; i < 10; i++) {
@@ -176,9 +233,9 @@ function takeTurn() {
                     if (tile.classList.contains('enemy-ship')) {
                         tile.classList.add('hit');
                         enemyGameboard.coordinatesGrid[row][column].get('ship').hit(column, row);
-                        if (enemyGameboard.allShipsAreSunk()) {
-                            alert('WINNER WINNER CHICKEN DINNER!')
-                        }
+                        // if (enemyGameboard.allShipsAreSunk()) {
+                        //     alert('WINNER WINNER CHICKEN DINNER!')
+                        // }
                         hitCount = 0;
                         for (let i = 0; i < 10; i++) {
                             for (let j = 0; j < 10; j++) {
@@ -195,19 +252,27 @@ function takeTurn() {
                     else {
                         tile.classList.add('miss');
                     }
+                    // for (let i = 0; i < 10; i++) {
+                    //     for (let j = 0; j < 10; j++) {
+                    //         if (document.querySelector(`[data-x-coordinate="${j}"][data-y-coordinate="${i}"]`).classList.contains('hit')) {
+                    //             hitCount++;
+                    //         }
+                    //     }
+                    // }
+                    computerAttacks(friendylShipsHitCount);
                 });
             }
         }
     }
 }
 
-function placeEnemyShips() {
+function placeEnemyShips(friendylShipsHitCount) {
     for (let enemyShip of enemyShipsList) {
         if (enemyGameboard.shipsList.length === 0) {
             // console.log(listofLength5ShipHorizontalPositions.length)
             let randomIndex = Math.floor(Math.random() * (listofLength5ShipHorizontalPositions.length - 1));
-            console.log(randomIndex)
-            console.log(listofLength5ShipHorizontalPositions.length)
+            // console.log(randomIndex)
+            // console.log(listofLength5ShipHorizontalPositions.length)
             // console.log(randomIndex)
             for (let e = 0; e < 5; e++) {
                 // console.log(randomIndex)
@@ -227,8 +292,8 @@ function placeEnemyShips() {
         }
         else if (enemyGameboard.shipsList.length === 1) {
             let randomIndex = Math.floor(Math.random() *  (listofLength4ShipHorizontalPositions.length - 1));
-            console.log(randomIndex)
-            console.log(listofLength4ShipHorizontalPositions.length)
+            // console.log(randomIndex)
+            // console.log(listofLength4ShipHorizontalPositions.length)
             for (let e = 0; e < 4; e++) {
                 let tempXCoordinate = listofLength4ShipHorizontalPositions[randomIndex][e][0];
                 let tempYCoordinate = listofLength4ShipHorizontalPositions[randomIndex][e][1];
@@ -246,8 +311,8 @@ function placeEnemyShips() {
         }
         else if (enemyGameboard.shipsList.length === 2 || enemyGameboard.shipsList.length === 3) {
             let randomIndex = Math.floor(Math.random() *  (listofLength3ShipHorizontalPositions.length - 1));
-            console.log(randomIndex)
-            console.log(listofLength3ShipHorizontalPositions.length)
+            // console.log(randomIndex)
+            // console.log(listofLength3ShipHorizontalPositions.length)
             for (let e = 0; e < 3; e++) {
                 let tempXCoordinate = listofLength3ShipHorizontalPositions[randomIndex][e][0];
                 let tempYCoordinate = listofLength3ShipHorizontalPositions[randomIndex][e][1];
@@ -265,8 +330,8 @@ function placeEnemyShips() {
         }
         else {
             let randomIndex = Math.floor(Math.random() *  (listofLength2ShipHorizontalPositions.length - 1));
-            console.log(randomIndex)
-            console.log(listofLength2ShipHorizontalPositions.length)
+            // console.log(randomIndex)
+            // console.log(listofLength2ShipHorizontalPositions.length)
             for (let e = 0; e < 2; e++) {
                 let tempXCoordinate = listofLength2ShipHorizontalPositions[randomIndex][e][0];
                 let tempYCoordinate = listofLength2ShipHorizontalPositions[randomIndex][e][1];
@@ -287,7 +352,7 @@ function placeEnemyShips() {
     }
     // console.log(enemyGameboard.coordinatesGrid)
     if (enemyGameboard.shipsList.length === 5) {
-        takeTurn();
+        takeTurn(friendylShipsHitCount);
     }
 }
 
@@ -308,8 +373,11 @@ export function playGame(tilesList) {
     
     // console.log(listofLength5ShipHorizontalPositions)
     addInitialPotentialPositions();
-    placeEnemyShips();
-    // console.log(enemyGameboard.coordinatesGrid);
+
+    let friendylShipsHitCount = 0;
+
+    placeEnemyShips(friendylShipsHitCount);
+    console.log(enemyGameboard.coordinatesGrid);
     // console.log(enemyGameboard.shipsCoordinatesList);
-    console.log(enemyGameboard.shipsList);
+    // console.log(enemyGameboard.shipsList);
 }

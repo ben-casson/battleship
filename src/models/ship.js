@@ -3,7 +3,7 @@ export const createShip = (length, shipType) => {
     const coordinates = [];
     
     function hit(xCoordinate, yCoordinate) {
-        for (let map of this.coordinates) {
+        for (let map of coordinates) {
             if (map.get('x') === xCoordinate && map.get('y') === yCoordinate) {
                 map.set('hit', true);
             }
@@ -11,7 +11,7 @@ export const createShip = (length, shipType) => {
     }
 
     function isSunk() {
-        for (let map of this.coordinates) {
+        for (let map of coordinates) {
             if (!map.get('hit')) return false;
         }
         return true;

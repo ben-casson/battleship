@@ -21,12 +21,12 @@ export const createGameboard = () => {
         addShipCoordinatesToCoordinatesList(shipObject.coordinates);
     }
     
-    function receiveAttack(xCoordinate, yCoordinate) {
-        let currentCoordinate = coordinatesGrid.at(yCoordinate).at(xCoordinate);
-        if (currentCoordinate.get('ship') !== 'none') {
-            currentCoordinate.get('ship').hit(xCoordinate, yCoordinate);
+    function receiveAttack(tile, xCoordinate, yCoordinate) {
+        // let currentCoordinate = coordinatesGrid.at(yCoordinate).at(xCoordinate);
+        if (tile.get('ship') !== 'none') {
+            tile.get('ship').hit(xCoordinate, yCoordinate);
         }
-        currentCoordinate.set('attacked', true);
+        tile.set('attacked', true);
     }
     
     function allShipsAreSunk() {
