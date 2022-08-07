@@ -31,7 +31,7 @@ $gray: #67717E;
 $light-gray: #BDC1C6;
 $dark-gray: #1e1e1e;
 $blue: #264876;
-$dark-blue: #2d5183;// 1f3b61
+$dark-blue: #2d5183;
 $red: #DF0101;
 $dark-red: #710000;
 
@@ -53,7 +53,6 @@ $dark-red: #710000;
     flex-grow: 1;
     max-width: 500px;
     padding: 10px 0px;
-    // outline: 1px solid red;
     overflow-y: scroll;
 }
 
@@ -94,7 +93,7 @@ h2 {
     width: 220px;
     height: 40px;
     border-radius: 20px;
-    background-color: #161616; //272727
+    background-color: #161616; 
     border: 2px solid #fff;
 }
 
@@ -143,7 +142,7 @@ button {
     max-width: 400px;
     height: 90vw;
     max-height: 400px;
-    background-color: $blue;// dark-blue
+    background-color: $blue;
     border-radius: 4%;
     box-shadow: 0px 0px 2px 2px $blue;
     border: 5px solid $dark-blue;
@@ -197,23 +196,15 @@ button {
 .tile {
     background-color: #315383;
     border-radius: 50%;
-    // box-shadow: inset 0px 0px 5px 0px $blue; //$blue
-    // box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.452);
 }
 
 .ship-preview {
     background-color: $light-gray; 
-    // box-shadow: none;
-    // box-shadow: 0px 0px 10px $light-gray;
 }
 
 .has-ship {
     background-color: $gray; //$gray
     box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.37);
-    // border: 7px solid $blue;
-    // -webkit-transition: background-color 500ms ease-in;
-    // -ms-transition: background-color 500ms ease-in;
-    // transition: background-color 500ms ease-in;
 }
 
 #enemy-gameboard {
@@ -224,33 +215,23 @@ button {
 }
 
 .hit {
-    background-color: $dark-red; //$gray
+    background-color: $dark-red; 
     box-shadow: inset 0px 0px 15px rgb(0, 0, 0);
-    // border: 7px solid $blue;
-    // -webkit-transition: background-color 500ms ease-in;
-    // -ms-transition: background-color 500ms ease-in;
-    // transition: background-color 500ms ease-in;
 }
 .miss {
-    background-color: #315383 !important;// #274670
+    background-color: #315383 !important;
     border-radius: 50%;
-    // box-shadow: inset 0px 0px 5px 0px $blue; //$blue
     box-shadow: inset 0px 0px 15px rgba(1, 8, 31, 0.678) !important;
 }
 
 .friendly-gameboard-display-tile {
     .hit {
-        background-color: $dark-red; //$gray
+        background-color: $dark-red; 
         box-shadow: inset 0px 0px 15px rgb(0, 0, 0);
-        // border: 7px solid $blue;
-        // -webkit-transition: background-color 500ms ease-in;
-        // -ms-transition: background-color 500ms ease-in;
-        // transition: background-color 500ms ease-in;
     }
     .miss {
-        background-color: #315383 !important;// #274670
+        background-color: #315383 !important;
         border-radius: 50%;
-        // box-shadow: inset 0px 0px 5px 0px $blue; //$blue
         box-shadow: inset 0px 0px 15px rgba(1, 8, 31, 0.678) !important;
     }
 }
