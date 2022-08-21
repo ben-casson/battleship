@@ -2,4 +2,6 @@
 
 [Play Battleship](https://ben-casson.github.io/battleship/)
 
-*Note: This site is not yet finished*. 
+### TODO
+- alert the user and end the game when enemy wins
+- allow enemy ships to be placed vertically
